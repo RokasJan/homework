@@ -1,0 +1,169 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:sch="test"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:tns="http://homework.example.com/" targetNamespace="http://homework.example.com/">
+    <wsdl:types>
+        <xs:schema xmlns:tel="test"
+            xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="test">
+            <!--  Root service request  -->
+            <xs:complexType name="ServiceRequest">
+                <xs:sequence>
+                    <xs:element name="ServiceId" type="xs:string"/>
+                    <xs:element name="ServiceType" type="xs:string"/>
+                    <xs:element name="CustomerId" type="xs:string"/>
+                    <xs:element name="SubscriptionId" type="xs:string"/>
+                    <xs:element name="ServiceDetails" type="tel:ServiceDetails"/>
+                    <xs:element name="CustomerDetails" type="tel:CustomerDetails"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ServiceDetails">
+                <xs:sequence>
+                    <xs:element name="PlanType" type="xs:string"/>
+                    <xs:element minOccurs="0" name="DataLimit" type="xs:string"/>
+                    <xs:element name="RoamingEnabled" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="AdditionalServices" type="tel:AdditionalServices"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="AdditionalServices">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" name="Service" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="CustomerDetails">
+                <xs:sequence>
+                    <xs:element name="Name" type="xs:string"/>
+                    <xs:element minOccurs="0" name="Address" type="tel:Address"/>
+                    <xs:element name="ContactNumber" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Address">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="Street" type="xs:string"/>
+                    <xs:element minOccurs="0" name="City" type="xs:string"/>
+                    <xs:element minOccurs="0" name="PostalCode" type="xs:string"/>
+                    <xs:element minOccurs="0" name="Country" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <!--  Common Operation Response  -->
+            <xs:complexType name="OperationResponse">
+                <xs:sequence>
+                    <xs:element name="Status" type="xs:string"/>
+                    <xs:element minOccurs="0" name="Message" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <!--  CRUD elements  -->
+            <xs:element name="Create" type="tel:ServiceRequest"/>
+            <xs:element name="CreateResponse" type="tel:OperationResponse"/>
+            <xs:element name="Read" type="tel:ReadRequestType"/>
+            <xs:element name="ReadResponse" type="tel:ReadServiceResponseType"/>
+            <xs:complexType name="ReadRequestType">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="ServiceId" type="xs:string"/>
+                    <xs:element minOccurs="0" name="CustomerId" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ReadServiceResponseType">
+                <xs:sequence>
+                    <xs:element name="Status" type="xs:string"/>
+                    <xs:element minOccurs="0" name="Message" type="xs:string"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="Service" type="tel:ServiceRequest"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="Update" type="tel:ServiceRequest"/>
+            <xs:element name="UpdateResponse" type="tel:OperationResponse"/>
+            <xs:complexType name="DeleteRequestType">
+                <xs:sequence>
+                    <xs:element name="ServiceId" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="Delete" type="tel:DeleteRequestType"/>
+            <xs:element name="DeleteResponse" type="tel:OperationResponse"/>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="DeleteResponse">
+        <wsdl:part name="parameters" element="sch:DeleteResponse"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="UpdateResponse">
+        <wsdl:part name="parameters" element="sch:UpdateResponse"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="CreateRequest">
+        <wsdl:part name="parameters" element="sch:Create"/>
+    </wsdl:message>
+    <wsdl:message name="CreateResponse">
+        <wsdl:part name="parameters" element="sch:CreateResponse"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="UpdateRequest">
+        <wsdl:part name="parameters" element="sch:Update"/>
+    </wsdl:message>
+    <wsdl:message name="ReadRequest">
+        <wsdl:part name="parameters" element="sch:Read"/>
+    </wsdl:message>
+    <wsdl:message name="ReadResponse">
+        <wsdl:part name="parameters" element="sch:ReadResponse"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="DeleteRequest">
+        <wsdl:part name="parameters" element="sch:Delete"/>
+    </wsdl:message>
+    <wsdl:portType name="ServiceManagerPort">
+        <wsdl:operation name="Delete">
+            <wsdl:input message="tns:DeleteRequest" name="DeleteRequest"></wsdl:input>
+            <wsdl:output message="tns:DeleteResponse" name="DeleteResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Update">
+            <wsdl:input message="tns:UpdateRequest" name="UpdateRequest"></wsdl:input>
+            <wsdl:output message="tns:UpdateResponse" name="UpdateResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Create">
+            <wsdl:input message="tns:CreateRequest" name="CreateRequest"></wsdl:input>
+            <wsdl:output message="tns:CreateResponse" name="CreateResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Read">
+            <wsdl:input message="tns:ReadRequest" name="ReadRequest"></wsdl:input>
+            <wsdl:output message="tns:ReadResponse" name="ReadResponse"></wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="ServiceManagerPortSoap11" type="tns:ServiceManagerPort">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="Delete">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="DeleteRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="DeleteResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Update">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="UpdateRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="UpdateResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Create">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="CreateRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="CreateResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Read">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="ReadRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="ReadResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="ServiceManagerPortService">
+        <wsdl:port binding="tns:ServiceManagerPortSoap11" name="ServiceManagerPortSoap11">
+            <soap:address location="http://localhost:8080/ws"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
