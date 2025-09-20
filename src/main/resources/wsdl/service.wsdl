@@ -6,7 +6,7 @@
         <xs:schema xmlns:tel="test"
             xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="test">
             <!-- Create request -->
-            <xs:complexType name="ServiceRequest">
+            <xs:complexType name="CreateRequest">
                 <xs:sequence>
                     <xs:element name="ServiceId" type="xs:string"/>
                     <xs:element name="ServiceType" type="xs:string"/>
@@ -68,13 +68,14 @@
                     <!-- Error fields -->
                     <xs:element name="ErrorCode" type="xs:int" minOccurs="0"/>
                     <xs:element name="ErrorMessage" type="xs:string" minOccurs="0"/>
+                    <xs:element name="Error" type="xs:string" minOccurs="0"/>
                     <!-- Read response -->
                     <xs:element name="Data" type="tel:ReadServiceResponseType" minOccurs="0"/>
                 </xs:choice>
             </xs:complexType>
 
             <!-- CRUD elements -->
-            <xs:element name="Create" type="tel:ServiceRequest"/>
+            <xs:element name="Create" type="tel:CreateRequest"/>
             <xs:element name="CreateResponse" type="tel:Response"/>
 
             <xs:element name="Read" type="tel:ReadRequestType"/>
@@ -89,7 +90,7 @@
 
             <xs:complexType name="ReadServiceResponseType">
                 <xs:sequence>
-                    <xs:element minOccurs="0" maxOccurs="unbounded" name="Data" type="tel:ServiceRequest"/>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="Data" type="tel:CreateRequest"/>
                 </xs:sequence>
             </xs:complexType>
 

@@ -24,7 +24,7 @@ public class ServiceDetails {
     private String specialOffer;
 
     @XmlElement(name = "RoamingEnabled", required = true)
-    private boolean roamingEnabled;
+    private Boolean roamingEnabled;
 
     @XmlElement(name = "AdditionalServices")
     private AdditionalServices additionalServices;

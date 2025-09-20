@@ -66,6 +66,7 @@
       <!-- Error fields -->
       <xs:element name="ErrorCode" type="xs:int" minOccurs="0"/>
       <xs:element name="ErrorMessage" type="xs:string" minOccurs="0"/>
+      <xs:element name="Error" type="xs:string" minOccurs="0"/>
       <!-- Read response -->
       <xs:element name="Data" type="tel:ReadServiceResponseType" minOccurs="0"/>
     </xs:choice>

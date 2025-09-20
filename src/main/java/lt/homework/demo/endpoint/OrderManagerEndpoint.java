@@ -1,4 +1,4 @@
-package lt.homework.demo.service.endpoint;
+package lt.homework.demo.endpoint;
 
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
@@ -6,9 +6,9 @@ import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 import lt.homework.demo.consts.Constants;
+import lt.homework.demo.model.requests.CreateRequest;
 import lt.homework.demo.model.requests.DeleteRequest;
 import lt.homework.demo.model.requests.ReadRequest;
-import lt.homework.demo.model.requests.ServiceRequest;
 import lt.homework.demo.model.requests.UpdateRequest;
 import lt.homework.demo.model.responses.ResultResponse;
 import lt.homework.demo.service.OrderService;
@@ -24,7 +24,7 @@ public class OrderManagerEndpoint {
 
     @PayloadRoot(namespace = Constants.NAMESPACE_URI, localPart = "Create")
     @ResponsePayload
-    public ResultResponse createService(@RequestPayload ServiceRequest request) {
+    public ResultResponse createService(@RequestPayload CreateRequest request) {
         return orderService.create(request);
     }
 

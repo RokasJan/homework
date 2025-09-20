@@ -1,4 +1,4 @@
-package lt.homework.demo.configuration;
+package lt.homework.demo.config;
 
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.ApplicationContext;
@@ -16,9 +16,9 @@ public class SoapConfig {
     // Automatically generates WSDL using the provided XSD schema
     /*@Bean
     public XsdSchema serviceSchema() {
-        return new SimpleXsdSchema(new org.springframework.core.io.ClassPathResource("xsd/service.xsd"));
+        return new SimpleXsdSchema(new ClassPathResource("xsd/service.xsd"));
     }
-
+    
     @Bean(name = "service")
     public DefaultWsdl11Definition defaultWsdl11Definition(XsdSchema serviceSchema) {
         DefaultWsdl11Definition wsdl = new DefaultWsdl11Definition();

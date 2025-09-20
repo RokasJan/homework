@@ -36,26 +36,26 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<optional>true</optional>
+			<groupId>org.springframework.ws</groupId>
+			<artifactId>spring-ws-core</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+
 		<!-- JAXB (for XML marshalling/unmarshalling) -->
 		<dependency>
 			<groupId>jakarta.xml.bind</groupId>
 			<artifactId>jakarta.xml.bind-api</artifactId>
-		</dependency>
-
-		<!-- Optional: To view WSDL at runtime -->
-		<dependency>
-			<groupId>org.springframework.ws</groupId>
-			<artifactId>spring-ws-core</artifactId>
 		</dependency>
 
 		<dependency>
@@ -69,6 +69,13 @@
         <artifactId>mapstruct</artifactId>
         <version>1.5.5.Final</version>
     </dependency>
+
+	<dependency>
+		<groupId>org.projectlombok</groupId>
+		<artifactId>lombok-mapstruct-binding</artifactId>
+		<version>0.2.0</version>
+		<scope>provided</scope>
+	</dependency>
 
 	</dependencies>
 

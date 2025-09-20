@@ -16,7 +16,7 @@ import lt.homework.demo.model.ServiceDetails;
 @AllArgsConstructor
 @XmlRootElement(name = "Create", namespace = Constants.NAMESPACE_URI)
 @XmlAccessorType(XmlAccessType.FIELD)
-public class ServiceRequest {
+public class CreateRequest {
 
     @XmlElement(name = "ServiceId", required = true)
     private String serviceId;
@@ -26,9 +26,6 @@ public class ServiceRequest {
 
     @XmlElement(name = "CustomerId", required = true)
     private String customerId;
-
-    @XmlElement(name = "VIPCustomer")
-    private String vipCustomer;
 
     @XmlElement(name = "SubscriptionId", required = true)
     private String subscriptionId;
