@@ -1,4 +1,4 @@
-package lt.homework.demo.model.response;
+package lt.homework.demo.model.requests;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
@@ -7,17 +7,15 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lt.homework.demo.consts.Constants;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@XmlRootElement(name = "OperationResponse", namespace = "test")
+@XmlRootElement(name = "Delete", namespace = Constants.NAMESPACE_URI)
 @XmlAccessorType(XmlAccessType.FIELD)
-public class OperationResponse {
+public class DeleteRequest {
 
-    @XmlElement(name = "Status", required = true)
-    private String status;
-
-    @XmlElement(name = "Message")
-    private String message;
+    @XmlElement(name = "ServiceId", required = true)
+    private String serviceId;
 }

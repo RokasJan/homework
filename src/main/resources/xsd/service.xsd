@@ -1,67 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           targetNamespace="test"
-           xmlns:tel="test"
-           elementFormDefault="qualified">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="test"
+  xmlns:tel="test" elementFormDefault="qualified">
 
-  <!-- Root service request -->
-<xs:complexType name="ServiceRequest">
-  <xs:sequence>
-    <xs:element name="ServiceId" type="xs:string"/>
-    <xs:element name="ServiceType" type="xs:string"/>
-    <xs:element name="CustomerId" type="xs:string"/>
-    <xs:element name="SubscriptionId" type="xs:string"/>
-    <xs:element name="ServiceDetails" type="tel:ServiceDetails"/>
-    <xs:element name="CustomerDetails" type="tel:CustomerDetails"/>
-  </xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="ServiceDetails">
-  <xs:sequence>
-    <xs:element name="PlanType" type="xs:string"/>
-    <xs:element name="DataLimit" type="xs:string" minOccurs="0"/>
-    <xs:element name="RoamingEnabled" type="xs:boolean"/>
-    <xs:element name="AdditionalServices" type="tel:AdditionalServices" minOccurs="0"/>
-  </xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="AdditionalServices">
-  <xs:sequence>
-    <xs:element name="Service" type="xs:string" maxOccurs="unbounded"/>
-  </xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="CustomerDetails">
-  <xs:sequence>
-    <xs:element name="Name" type="xs:string"/>
-    <xs:element name="Address" type="tel:Address" minOccurs="0"/>
-    <xs:element name="ContactNumber" type="xs:string"/>
-  </xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="Address">
-  <xs:sequence>
-    <xs:element name="Street" type="xs:string" minOccurs="0"/>
-    <xs:element name="City" type="xs:string" minOccurs="0"/>
-    <xs:element name="PostalCode" type="xs:string" minOccurs="0"/>
-    <xs:element name="Country" type="xs:string" minOccurs="0"/>
-  </xs:sequence>
-</xs:complexType>
-
-<!-- Common Operation Response -->
-<xs:complexType name="OperationResponse">
+  <!-- Create request -->
+  <xs:complexType name="ServiceRequest">
     <xs:sequence>
+      <xs:element name="ServiceId" type="xs:string"/>
+      <xs:element name="ServiceType" type="xs:string"/>
+      <xs:element name="CustomerId" type="xs:string"/>
+      <xs:element name="SubscriptionId" type="xs:string"/>
+      <xs:element name="ServiceDetails" type="tel:ServiceDetails"/>
+      <xs:element name="CustomerDetails" type="tel:CustomerDetails"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Update request -->
+  <xs:complexType name="UpdateRequestType">
+    <xs:sequence>
+      <xs:element name="ServiceId" type="xs:string"/>
+      <xs:element name="ServiceType" type="xs:string" minOccurs="0"/>
+      <xs:element name="ServiceDetails" type="tel:ServiceDetails" minOccurs="0"/>
+      <xs:element name="CustomerDetails" type="tel:CustomerDetails" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Common nested types -->
+  <xs:complexType name="ServiceDetails">
+    <xs:sequence>
+      <xs:element name="PlanType" type="xs:string"/>
+      <xs:element name="DataLimit" type="xs:string" minOccurs="0"/>
+      <xs:element name="RoamingEnabled" type="xs:boolean"/>
+      <xs:element name="AdditionalServices" type="tel:AdditionalServices" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="AdditionalServices">
+    <xs:sequence>
+      <xs:element name="Service" type="xs:string" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="CustomerDetails">
+    <xs:sequence>
+      <xs:element name="Name" type="xs:string"/>
+      <xs:element name="Address" type="tel:Address" minOccurs="0"/>
+      <xs:element name="ContactNumber" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="Address">
+    <xs:sequence>
+      <xs:element name="Street" type="xs:string" minOccurs="0"/>
+      <xs:element name="City" type="xs:string" minOccurs="0"/>
+      <xs:element name="PostalCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="Country" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Wrapper response -->
+  <xs:complexType name="Response">
+    <xs:choice>
+      <!-- Success fields -->
       <xs:element name="Status" type="xs:string"/>
       <xs:element name="Message" type="xs:string" minOccurs="0"/>
-    </xs:sequence>
+      <!-- Error fields -->
+      <xs:element name="ErrorCode" type="xs:int" minOccurs="0"/>
+      <xs:element name="ErrorMessage" type="xs:string" minOccurs="0"/>
+      <!-- Read response -->
+      <xs:element name="Data" type="tel:ReadServiceResponseType" minOccurs="0"/>
+    </xs:choice>
   </xs:complexType>
 
   <!-- CRUD elements -->
   <xs:element name="CreateRequest" type="tel:ServiceRequest"/>
-  <xs:element name="CreateResponse" type="tel:OperationResponse"/>
+  <xs:element name="CreateResponse" type="tel:Response"/>
 
   <xs:element name="ReadRequest" type="tel:ReadRequestType"/>
-  <xs:element name="ReadResponse" type="tel:ReadServiceResponseType"/>
+  <xs:element name="ReadResponse" type="tel:Response"/>
 
   <xs:complexType name="ReadRequestType">
     <xs:sequence>
@@ -72,14 +87,12 @@
 
   <xs:complexType name="ReadServiceResponseType">
     <xs:sequence>
-      <xs:element name="Status" type="xs:string"/>
-      <xs:element name="Message" type="xs:string" minOccurs="0"/>
-      <xs:element name="Service" type="tel:ServiceRequest" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="Data" type="tel:ServiceRequest" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
 
-  <xs:element name="UpdateRequest" type="tel:ServiceRequest"/>
-  <xs:element name="UpdateResponse" type="tel:OperationResponse"/>
+  <xs:element name="UpdateRequest" type="tel:UpdateRequestType"/>
+  <xs:element name="UpdateResponse" type="tel:Response"/>
 
   <xs:complexType name="DeleteRequestType">
     <xs:sequence>
@@ -87,6 +100,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="DeleteRequest" type="tel:DeleteRequestType"/>
-  <xs:element name="DeleteResponse" type="tel:OperationResponse"/>
+  <xs:element name="DeleteResponse" type="tel:Response"/>
 
 </xs:schema>

@@ -20,6 +20,9 @@ public class ServiceDetails {
     @XmlElement(name = "DataLimit")
     private String dataLimit;
 
+    @XmlElement(name = "SpecialOffer")
+    private String specialOffer;
+
     @XmlElement(name = "RoamingEnabled", required = true)
     private boolean roamingEnabled;
 

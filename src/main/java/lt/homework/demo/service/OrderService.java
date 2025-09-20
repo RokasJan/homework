@@ -1,15 +1,14 @@
 package lt.homework.demo.service;
 
-import lt.homework.demo.model.request.DeleteRequest;
-import lt.homework.demo.model.request.ReadRequest;
-import lt.homework.demo.model.request.ServiceRequest;
-import lt.homework.demo.model.request.UpdateRequest;
-import lt.homework.demo.model.response.OperationResponse;
-import lt.homework.demo.model.response.ReadServiceResponse;
+import lt.homework.demo.model.requests.DeleteRequest;
+import lt.homework.demo.model.requests.ReadRequest;
+import lt.homework.demo.model.requests.ServiceRequest;
+import lt.homework.demo.model.requests.UpdateRequest;
+import lt.homework.demo.model.responses.ResultResponse;
 
 public interface OrderService {
-    OperationResponse create(ServiceRequest request);
-    ReadServiceResponse read(ReadRequest request);
-    OperationResponse update(UpdateRequest request);
-    OperationResponse delete(DeleteRequest request);
+    ResultResponse create(ServiceRequest request);
+    ResultResponse read(ReadRequest request);
+    ResultResponse update(UpdateRequest request);
+    ResultResponse delete(DeleteRequest request);
 }
