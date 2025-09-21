@@ -1,0 +1,28 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+    xmlns:tel="test">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <tel:Update>
+            <tel:ServiceId>001</tel:ServiceId>            <!--— Mandatory, Unique Identifier -->
+            <tel:ServiceType>MobileDataService</tel:ServiceType>            <!-- Mandatory -->
+            <tel:ServiceDetails>                <!-- Mandatory -->
+                <tel:PlanType>5G</tel:PlanType>                <!-- Mandatory -->
+                <tel:RoamingEnabled>true</tel:RoamingEnabled>                <!-- Mandatory -->
+                <tel:AdditionalServices>                    <!-- Optional -->
+                    <tel:Service>MMS</tel:Service>
+                    <tel:Service>Voicemail</tel:Service>
+                </tel:AdditionalServices>
+            </tel:ServiceDetails>
+            <tel:CustomerDetails>                <!-- Mandatory -->
+                <tel:Name>John Doe</tel:Name>                <!-- Mandatory -->
+                <tel:Address>                    <!-- Optional -->
+                    <tel:Street>Main Street 1</tel:Street>
+                    <tel:City>Joniškis</tel:City>
+                    <tel:PostalCode>12345</tel:PostalCode>
+                    <tel:Country>Sweden</tel:Country>
+                </tel:Address>
+                <tel:ContactNumber>+46701234567</tel:ContactNumber>                <!-- Mandatory -->
+            </tel:CustomerDetails>
+        </tel:Update>
+    </soapenv:Body>
+</soapenv:Envelope>

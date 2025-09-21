@@ -1,0 +1,9 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+    xmlns:test="test">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <test:Delete>
+            <test:ServiceId>001</test:ServiceId>
+        </test:Delete>
+    </soapenv:Body>
+</soapenv:Envelope>

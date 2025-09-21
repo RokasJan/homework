@@ -1,0 +1,12 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+    xmlns:test="test">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <test:Read>
+            <!--Optional:-->
+            <!-- <test:ServiceId>?</test:ServiceId> -->
+            <!--Optional:-->
+            <!-- <test:CustomerId>?</test:CustomerId> -->
+        </test:Read>
+    </soapenv:Body>
+</soapenv:Envelope>
