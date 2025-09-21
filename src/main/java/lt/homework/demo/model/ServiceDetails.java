@@ -2,6 +2,8 @@ package lt.homework.demo.model;
 
 import java.util.List;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
@@ -14,6 +16,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ServiceDetails {
+
+    @NotNull(message = "Plan Type cannot be null")
+    @NotBlank(message = "Plan Type cannot be blank")
     @XmlElement(name = "PlanType", required = true)
     private String planType;
 
@@ -23,6 +28,7 @@ public class ServiceDetails {
     @XmlElement(name = "SpecialOffer")
     private String specialOffer;
 
+    @NotNull(message = "Roaming Enabled cannot be null")
     @XmlElement(name = "RoamingEnabled", required = true)
     private Boolean roamingEnabled;
 

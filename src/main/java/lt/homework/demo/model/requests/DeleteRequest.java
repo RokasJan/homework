@@ -1,5 +1,7 @@
 package lt.homework.demo.model.requests;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
@@ -16,6 +18,8 @@ import lt.homework.demo.consts.Constants;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class DeleteRequest {
 
+    @NotNull(message = "Service ID cannot be null")
+    @NotBlank(message = "Service ID cannot be blank")
     @XmlElement(name = "ServiceId", required = true)
     private String serviceId;
 }
