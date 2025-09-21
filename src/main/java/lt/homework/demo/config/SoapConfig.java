@@ -16,22 +16,6 @@ import jakarta.xml.bind.helpers.DefaultValidationEventHandler;
 @Configuration
 public class SoapConfig {
 
-    // Automatically generates WSDL using the provided XSD schema
-    /*@Bean
-    public XsdSchema serviceSchema() {
-        return new SimpleXsdSchema(new ClassPathResource("xsd/service.xsd"));
-    }
-    
-    @Bean(name = "service")
-    public DefaultWsdl11Definition defaultWsdl11Definition(XsdSchema serviceSchema) {
-        DefaultWsdl11Definition wsdl = new DefaultWsdl11Definition();
-        wsdl.setPortTypeName("ServiceManagerPort");
-        wsdl.setLocationUri("/ws");
-        wsdl.setTargetNamespace("http://homework.example.com/");
-        wsdl.setSchema(serviceSchema);
-        return wsdl;
-    }*/
-
    // Manually providing WSDL from resources
     @Bean(name = "service")
     public SimpleWsdl11Definition simpleWsdl11Definition() {
