@@ -1,5 +1,7 @@
-package lt.homework.demo.model.request;
+package lt.homework.demo.model.requests;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
@@ -7,32 +9,25 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lt.homework.demo.consts.Constants;
 import lt.homework.demo.model.CustomerDetails;
 import lt.homework.demo.model.ServiceDetails;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@XmlRootElement(name = "Create", namespace = "test")
+@XmlRootElement(name = "Update", namespace = Constants.NAMESPACE_URI)
 @XmlAccessorType(XmlAccessType.FIELD)
-public class ServiceRequest {
+public class UpdateRequest {
 
+    @NotNull(message = "Service ID cannot be null")
+    @NotBlank(message = "Service ID cannot be blank")
     @XmlElement(name = "ServiceId", required = true)
     private String serviceId;
 
-    @XmlElement(name = "ServiceType", required = true)
-    private String serviceType;
-
-    @XmlElement(name = "CustomerId", required = true)
-    private String customerId;
-
-    @XmlElement(name = "SubscriptionId", required = true)
-    private String subscriptionId;
-
-    @XmlElement(name = "ServiceDetails", required = true)
+    @XmlElement(name = "ServiceDetails")
     private ServiceDetails serviceDetails;
 
-    @XmlElement(name = "CustomerDetails", required = true)
+    @XmlElement(name = "CustomerDetails")
     private CustomerDetails customerDetails;
-
 }
