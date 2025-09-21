@@ -11,18 +11,19 @@ import lt.homework.demo.model.Order;
 @Component
 public class RoamingTransformation implements Transformation {
 
-    private final List<String> nonRoamingCountries;
+    private final List<String> roamingCountries;
 
     // Constructor to initialize nonRoamingCountries from application properties separated by commas and converted to a List
-    public RoamingTransformation(@Value("${transformations.countries.without.roaming}") String countries) {
-        this.nonRoamingCountries = Arrays.stream(countries.split(","))
+    public RoamingTransformation(@Value("${transformations.roaming.countries}") String countries) {
+        this.roamingCountries = Arrays.stream(countries.split(","))
                                          .map(String::trim)
                                          .toList();
     }
 
     @Override
     public void apply(Order order) {
-        if (nonRoamingCountries.contains(order.getCustomerDetails().getAddress().getCountry())) {
+        if (order.getServiceDetails().getRoamingEnabled() != null && 
+            !roamingCountries.contains(order.getCustomerDetails().getAddress().getCountry())) {
             order.getServiceDetails().setRoamingEnabled(null);
         }
     }

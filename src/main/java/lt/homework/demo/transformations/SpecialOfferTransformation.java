@@ -17,7 +17,9 @@ public class SpecialOfferTransformation implements Transformation {
         if (order.getServiceDetails().getPlanType().equals(PlanType.MOBILE_5G.getType()) 
             && order.getServiceDetails().getDataLimit() == null) {
                 order.setSpecialOffer(offer);
-            }
+        } else if (order.getSpecialOffer() != null && (!order.getServiceDetails().getPlanType().equals(PlanType.MOBILE_5G.getType()) 
+            || order.getServiceDetails().getDataLimit() != null)) {
+            order.setSpecialOffer(null);
+        }
     }
-    
 }

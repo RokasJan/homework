@@ -1,6 +1,7 @@
 package lt.homework.demo.service.impl;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,8 @@ import lt.homework.demo.model.requests.ReadRequest;
 import lt.homework.demo.model.requests.UpdateRequest;
 import lt.homework.demo.model.responses.ResultResponse;
 import lt.homework.demo.service.OrderService;
+import lt.homework.demo.transformations.RoamingTransformation;
+import lt.homework.demo.transformations.SpecialOfferTransformation;
 import lt.homework.demo.transformations.Transformation;
 import lt.homework.demo.util.StringUtils;
 import lt.homework.demo.validator.CreateRequestValidator;
@@ -29,6 +32,7 @@ public class OrderServiceImpl implements OrderService {
     private final RequestMapper mapper;
     private final List<Transformation> transformations;
     private final CreateRequestValidator validator;
+    private static final Set<Class<?>> updateTransformations = Set.of(RoamingTransformation.class, SpecialOfferTransformation.class);
 
     public OrderServiceImpl(InMemoryDabase database, RequestMapper mapper, 
             List<Transformation> transformations, CreateRequestValidator validator) {
@@ -81,8 +85,11 @@ public class OrderServiceImpl implements OrderService {
             return ResultResponse.error(HttpStatus.NOT_FOUND.value(), "Given ServiceId does not exists");
         else {
             mapper.updateServiceRequestFromUpdate(request, databaseEntry);
+            transformations.stream()
+                .filter(t -> updateTransformations.contains(t.getClass()))
+                .forEach(t -> t.apply(databaseEntry));
             log.info("Service with ServiceId - {} updated", request.getServiceId());
-            log.info("New entry: {}", databaseEntry);
+            log.debug("New entry: {}", databaseEntry);
             return ResultResponse.success("Service updated");
         }
     }
