@@ -16,14 +16,15 @@ public class RoamingTransformation implements Transformation {
     // Constructor to initialize nonRoamingCountries from application properties separated by commas and converted to a List
     public RoamingTransformation(@Value("${transformations.roaming.countries}") String countries) {
         this.roamingCountries = Arrays.stream(countries.split(","))
-                                         .map(String::trim)
-                                         .toList();
+                .map(String::trim)
+                .toList();
     }
 
     @Override
     public void apply(Order order) {
-        if (order.getServiceDetails().getRoamingEnabled() != null && 
-            !roamingCountries.contains(order.getCustomerDetails().getAddress().getCountry())) {
+        if (order.getServiceDetails().getRoamingEnabled() != null && order.getCustomerDetails().getAddress() != null
+                && order.getCustomerDetails().getAddress().getCountry() != null
+                && !roamingCountries.contains(order.getCustomerDetails().getAddress().getCountry())) {
             order.getServiceDetails().setRoamingEnabled(null);
         }
     }
