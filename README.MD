@@ -5,6 +5,8 @@ This is a **Spring Boot SOAP service** demo application that uses **JAXB** for X
 
 The service exposes operations for managing services and customers via SOAP requests.
 
+For localhost, WSDL is accessable by url - http://localhost:8080/ws/service.wsdl.
+
 ---
 
 ### Notes
