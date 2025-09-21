@@ -34,7 +34,7 @@ public class OrderServiceImpl implements OrderService {
     private final CreateRequestValidator validator;
     private static final Set<Class<?>> updateTransformations = Set.of(RoamingTransformation.class, SpecialOfferTransformation.class);
 
-    public OrderServiceImpl(InMemoryDabase database, RequestMapper mapper, 
+    public OrderServiceImpl(InMemoryDabase database, RequestMapper mapper,
             List<Transformation> transformations, CreateRequestValidator validator) {
         this.database = database;
         this.mapper = mapper;
@@ -55,25 +55,28 @@ public class OrderServiceImpl implements OrderService {
             return ResultResponse.success("Service created");
         } catch (ValidationException e) {
             log.error("Error during creating new service for user - {}", request.getCustomerId(), e.getMessage());
-            if (e.getMessage().equals(Constants.PHONE_NUMBER_PATTERN_ERROR))
-                return ResultResponse.detailedError(HttpStatus.BAD_REQUEST.value(), e.getMessage(), 
-                    Constants.TRANSFORMATION_ERROR_MESSAGE);
-            else
+            if (e.getMessage().equals(Constants.PHONE_NUMBER_PATTERN_ERROR)) {
+                return ResultResponse.detailedError(HttpStatus.BAD_REQUEST.value(), e.getMessage(),
+                        Constants.TRANSFORMATION_ERROR_MESSAGE);
+            } else {
                 return ResultResponse.error(HttpStatus.BAD_REQUEST.value(), e.getMessage());
+            }
         }
     }
 
     @Override
     public ResultResponse read(ReadRequest request) {
         log.info("read: {}", request);
-        if (database.isEmpty())
+        if (database.isEmpty()) {
             return ResultResponse.error(HttpStatus.NOT_FOUND.value(), "Database currently is empty!");
+        }
         List<Order> list = database.streamValues()
-            .filter(db -> StringUtils.isNullOrBlank(request.getCustomerId()) || db.getCustomerId().equals(request.getCustomerId()))
-            .filter(db -> StringUtils.isNullOrBlank(request.getServiceId()) || db.getServiceId().equals(request.getServiceId()))
-            .toList();
-        if (list.isEmpty())
+                .filter(db -> StringUtils.isNullOrBlank(request.getCustomerId()) || db.getCustomerId().equals(request.getCustomerId()))
+                .filter(db -> StringUtils.isNullOrBlank(request.getServiceId()) || db.getServiceId().equals(request.getServiceId()))
+                .toList();
+        if (list.isEmpty()) {
             return ResultResponse.error(HttpStatus.NOT_FOUND.value(), "No matching records found!");
+        }
         return ResultResponse.read(list.size() + " record(s) found", list);
     }
 
@@ -81,13 +84,13 @@ public class OrderServiceImpl implements OrderService {
     public ResultResponse update(UpdateRequest request) {
         log.info("update: {}", request.getServiceId());
         Order databaseEntry = database.get(request.getServiceId());
-        if (databaseEntry == null)
+        if (databaseEntry == null) {
             return ResultResponse.error(HttpStatus.NOT_FOUND.value(), "Given ServiceId does not exists");
-        else {
+        } else {
             mapper.updateServiceRequestFromUpdate(request, databaseEntry);
             transformations.stream()
-                .filter(t -> updateTransformations.contains(t.getClass()))
-                .forEach(t -> t.apply(databaseEntry));
+                    .filter(t -> updateTransformations.contains(t.getClass()))
+                    .forEach(t -> t.apply(databaseEntry));
             log.info("Service with ServiceId - {} updated", request.getServiceId());
             log.debug("New entry: {}", databaseEntry);
             return ResultResponse.success("Service updated");

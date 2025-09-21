@@ -10,7 +10,7 @@ import lt.homework.demo.model.requests.CreateRequest;
 
 @Component
 public class CreateRequestValidator {
-    
+
     private final InMemoryDabase database;
 
     @Value("${validation.phone.pattern}")
@@ -21,9 +21,14 @@ public class CreateRequestValidator {
     }
 
     public void validate(CreateRequest request) {
-        if (database.containsKey(request.getServiceId()))
+        if (database.containsKey(request.getServiceId())) {
             throw new ValidationException(Constants.SERVICE_ID_EXISTS_ERROR);
-        if (!request.getCustomerDetails().getContactNumber().matches(phoneNumberPattern))
+        }
+        if (request.getServiceDetails().getRoamingEnabled() == null) {
+            throw new ValidationException(Constants.ROAMING_ENABLED_NULL_ERROR);
+        }
+        if (!request.getCustomerDetails().getContactNumber().matches(phoneNumberPattern)) {
             throw new ValidationException(Constants.PHONE_NUMBER_PATTERN_ERROR);
+        }
     }
 }

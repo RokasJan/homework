@@ -16,7 +16,7 @@ import jakarta.xml.bind.helpers.DefaultValidationEventHandler;
 @Configuration
 public class SoapConfig {
 
-   // Manually providing WSDL from resources
+    // Manually providing WSDL from resources
     @Bean(name = "service")
     public SimpleWsdl11Definition simpleWsdl11Definition() {
         return new SimpleWsdl11Definition(new ClassPathResource("wsdl/service.wsdl"));
@@ -35,16 +35,15 @@ public class SoapConfig {
     public Jaxb2Marshaller marshaller() {
         Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
         marshaller.setClassesToBeBound(
-            lt.homework.demo.model.requests.CreateRequest.class,
-            lt.homework.demo.model.requests.DeleteRequest.class,
-            lt.homework.demo.model.requests.UpdateRequest.class,
-            lt.homework.demo.model.requests.ReadRequest.class,
-            lt.homework.demo.model.responses.ResultResponse.class,
-            lt.homework.demo.model.CustomerDetails.class,
-            lt.homework.demo.model.Address.class,
-            lt.homework.demo.model.ServiceDetails.class
+                lt.homework.demo.model.requests.CreateRequest.class,
+                lt.homework.demo.model.requests.DeleteRequest.class,
+                lt.homework.demo.model.requests.UpdateRequest.class,
+                lt.homework.demo.model.requests.ReadRequest.class,
+                lt.homework.demo.model.CustomerDetails.class,
+                lt.homework.demo.model.Address.class,
+                lt.homework.demo.model.ServiceDetails.class
         );
-        marshaller.setSchemas(new ClassPathResource("xsd/service.xsd")); 
+        marshaller.setSchemas(new ClassPathResource("xsd/service.xsd"));
         marshaller.setValidationEventHandler(new DefaultValidationEventHandler());
         return marshaller;
     }
