@@ -1,5 +1,6 @@
 package lt.homework.demo.model.requests;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.xml.bind.annotation.XmlAccessType;
@@ -42,10 +43,12 @@ public class CreateRequest {
 
     @NotNull(message = "Service Details cannot be null")
     @XmlElement(name = "ServiceDetails", required = true)
+    @Valid
     private ServiceDetails serviceDetails;
 
     @NotNull(message = "Customer Details cannot be null")
     @XmlElement(name = "CustomerDetails", required = true)
+    @Valid
     private CustomerDetails customerDetails;
 
 }

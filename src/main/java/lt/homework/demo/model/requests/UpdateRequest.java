@@ -1,5 +1,6 @@
 package lt.homework.demo.model.requests;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.xml.bind.annotation.XmlAccessType;
@@ -26,8 +27,10 @@ public class UpdateRequest {
     private String serviceId;
 
     @XmlElement(name = "ServiceDetails")
+    @Valid
     private ServiceDetails serviceDetails;
 
     @XmlElement(name = "CustomerDetails")
+    @Valid
     private CustomerDetails customerDetails;
 }
