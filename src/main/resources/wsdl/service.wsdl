@@ -46,7 +46,13 @@
                 <xs:sequence>
                     <xs:element name="Name" type="xs:string"/>
                     <xs:element minOccurs="0" name="Address" type="tel:Address"/>
-                    <xs:element name="ContactNumber" type="xs:string"/>
+                    <xs:element name="ContactNumber">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:pattern value="^\+\d{11,15}$" />
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
                 </xs:sequence>
             </xs:complexType>
 

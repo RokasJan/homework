@@ -54,7 +54,7 @@ public class OrderServiceImpl implements OrderService {
             log.info("New service added for user - {}", request.getCustomerId());
             return ResultResponse.success("Service created");
         } catch (ValidationException e) {
-            log.error("Error during creating new service for user - {}", request.getCustomerId(), e.getMessage());
+            log.error("Error during creating new service for user - {}. Message - {}", request.getCustomerId(), e.getMessage());
             if (e.getMessage().equals(Constants.PHONE_NUMBER_PATTERN_ERROR)) {
                 return ResultResponse.detailedError(HttpStatus.BAD_REQUEST.value(), e.getMessage(),
                         Constants.TRANSFORMATION_ERROR_MESSAGE);
